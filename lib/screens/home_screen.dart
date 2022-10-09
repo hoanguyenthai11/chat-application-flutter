@@ -1,8 +1,9 @@
-import 'package:chat_app_flutter/helpers.dart';
+import 'package:chat_app_flutter/app.dart';
 import 'package:chat_app_flutter/pages/calls_page.dart';
 import 'package:chat_app_flutter/pages/contacts_page.dart';
 import 'package:chat_app_flutter/pages/messages_page.dart';
 import 'package:chat_app_flutter/pages/notification_page.dart';
+import 'package:chat_app_flutter/screens/profile_screen.dart';
 import 'package:chat_app_flutter/theme.dart';
 import 'package:chat_app_flutter/widgets/avatar.dart';
 import 'package:chat_app_flutter/widgets/glowing_action_button.dart';
@@ -65,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 24),
             child: Avatar.small(
-              url: Helpers.randomPictureUrl(),
+              url: context.currentUserImage,
+              onTap: () => Navigator.of(context).push(ProfileScreen.route),
             ),
           )
         ],
@@ -135,7 +137,17 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                   child: GlowingActionButton(
                       color: AppColors.secondary,
                       icon: CupertinoIcons.add,
-                      onPressed: () {}),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const Dialog(
+                            child: AspectRatio(
+                              aspectRatio: 8 / 7,
+                              child: ContactsPage(),
+                            ),
+                          ),
+                        );
+                      }),
                 ),
                 _NavigationBarItem(
                     index: 2,
